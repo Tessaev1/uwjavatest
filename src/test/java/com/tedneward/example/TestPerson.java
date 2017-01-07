@@ -91,43 +91,15 @@ public class TestPerson {
   public void catchPropertyChange() {
     Person ted = new Person("Ted", 43, 250000);
     
-    
-    /*
-	  Lastly, you will need to implement a final test, marked in comments in the TestPerson class, which
-	  will register a "PropertyChangeListener" instance. This PropertyChangeListener will need to call
-	  the three "assertEquals" calls (as described in the comments) in order to test that the property
-	  did change. You shouldn't change anything above or below the comment lines beyond that.
-     */
-
-    // ============ YOUR CHANGES BEGIN HERE
-    // Call addPropertyChangeListener with a PropertyChangedListener
-    // that has the following code in it:
-    /*
-    assertEquals("ssn", pce.getPropertyName());
-    assertEquals("", pce.getOldValue());
-    assertEquals("012-34-5678", pce.getNewValue());
-    */
-
-    // ============ YOUR CHANGES END HERE
-    
     PropertyChangeListener listener = new PropertyChangeListener() {
 		public void propertyChange(PropertyChangeEvent pce) {
             assertEquals("ssn", pce.getPropertyName());
             assertEquals("", pce.getOldValue());
             assertEquals("012-34-5678", pce.getNewValue());
 		}
-      };
+    };
       
-      ted.addPropertyChangeListener(listener);
-    
-//    
-//    ted.addPropertyChangeListener(new PropertyChangeListener() {
-//		public void propertyChange(PropertyChangeEvent pce) {
-//            assertEquals("ssn", pce.getPropertyName());
-//            assertEquals("" + pce.getOldValue(), pce.getOldValue());
-//            assertEquals("012-34-5678", pce.getNewValue());
-//		}
-//    });
+    ted.addPropertyChangeListener(listener);
     
     assertEquals(false, ted.getPropertyChangeFired());
     ted.setSSN("012-34-5678");
