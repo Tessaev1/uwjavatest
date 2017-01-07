@@ -50,7 +50,7 @@ public class TestPerson {
     assertEquals(p1, p2);
     
     Person p3 = new Person("Ted", 43, 250000);
-    assertEquals(p1, p3);
+    assertEquals("ASDFASDF " + p1.equals(p3), p1, p3);
     
     Person p4 = new Person("Ted", 43, 500000);
     assertEquals(p1, p4);
@@ -70,7 +70,7 @@ public class TestPerson {
     List<Person> people = Person.getNewardFamily();
     Collections.sort(people, new Person.AgeComparator());
     
-    assertEquals(new Person("Matthew", 15, 0), people.get(0));
+    assertEquals("ASDFASDF", new Person("Matthew", 15, 0), people.get(0));
     assertEquals(new Person("Michael", 22, 10000), people.get(1));
     assertEquals(new Person("Ted", 41, 250000), people.get(2));
     assertEquals(new Person("Charlotte", 43, 150000), people.get(3));
@@ -90,6 +90,14 @@ public class TestPerson {
   @Test
   public void catchPropertyChange() {
     Person ted = new Person("Ted", 43, 250000);
+    
+    
+    /*
+	  Lastly, you will need to implement a final test, marked in comments in the TestPerson class, which
+	  will register a "PropertyChangeListener" instance. This PropertyChangeListener will need to call
+	  the three "assertEquals" calls (as described in the comments) in order to test that the property
+	  did change. You shouldn't change anything above or below the comment lines beyond that.
+     */
 
     // ============ YOUR CHANGES BEGIN HERE
     // Call addPropertyChangeListener with a PropertyChangedListener
@@ -101,6 +109,25 @@ public class TestPerson {
     */
 
     // ============ YOUR CHANGES END HERE
+    
+    PropertyChangeListener listener = new PropertyChangeListener() {
+		public void propertyChange(PropertyChangeEvent pce) {
+            assertEquals("ssn", pce.getPropertyName());
+            assertEquals("", pce.getOldValue());
+            assertEquals("012-34-5678", pce.getNewValue());
+		}
+      };
+      
+      ted.addPropertyChangeListener(listener);
+    
+//    
+//    ted.addPropertyChangeListener(new PropertyChangeListener() {
+//		public void propertyChange(PropertyChangeEvent pce) {
+//            assertEquals("ssn", pce.getPropertyName());
+//            assertEquals("" + pce.getOldValue(), pce.getOldValue());
+//            assertEquals("012-34-5678", pce.getNewValue());
+//		}
+//    });
     
     assertEquals(false, ted.getPropertyChangeFired());
     ted.setSSN("012-34-5678");
